@@ -44,8 +44,7 @@ module UniversalQueues
                 # Pops value out of the queue. Note, value with minimal 
                 # priority will be popped out.
                 #
-                # @param [Object] queue value
-                # @abstract
+                # @return [Object] queued value
                 #
                 
                 def pop
@@ -54,9 +53,7 @@ module UniversalQueues
                 
                 ##
                 # Indicates queue is empty.
-                #
                 # @param [Boolean] +true+ if it's, +false+ otherwise
-                # @abstract
                 #
                 
                 def empty?
@@ -65,7 +62,6 @@ module UniversalQueues
                 
                 ##
                 # Clears the queue.
-                # @abstract
                 #
               
                 def clear
@@ -74,9 +70,7 @@ module UniversalQueues
                 
                 ##
                 # Returns length of the queue.
-                #
                 # @return [Integer]
-                # @abstract
                 #
                 
                 def length
