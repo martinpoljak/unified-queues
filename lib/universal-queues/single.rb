@@ -106,6 +106,7 @@ module UniversalQueues
         ##
         # Indicates queue is empty.
         # @param [Boolean] +true+ if it's, +false+ otherwise
+        #
         
         def empty?
             @driver.empty?
@@ -129,6 +130,8 @@ module UniversalQueues
         def length
             @driver.length
         end
+        
+        alias :size :length
     end
 end
 

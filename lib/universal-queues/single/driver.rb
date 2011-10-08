@@ -85,8 +85,9 @@ module UniversalQueues
             #
           
             def clear!
-                not_implemented
-            end
+                while not self.pop.nil?
+                end
+            end 
             
             alias :clear :clear! 
             
@@ -100,6 +101,8 @@ module UniversalQueues
             def length
                 not_implemented
             end
+            
+            alias :size :length
         end
         
     end
