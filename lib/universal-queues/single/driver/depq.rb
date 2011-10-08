@@ -23,32 +23,33 @@ module UniversalQueues
         class Driver
           
             ##
-            # Array queue driver. Uses standard library +Array+ class
-            # for queueing. Priority isn't supported.
+            # Implicit heap queue driver. Uses the +Depq+ class from +depq+ gem
+            # for queueing. Priority is supported.
             #
             
-            class Array < Driver
+            class Depq < Driver
                 
                 ##
-                # Pushes the value into the queue. Priority isn't supported.
+                # Pushes the value into the queue. Priority is supported.
                 #
                 # @param [Object] value  value for push
                 # @param [Object] key  key for priority queues
                 #
                 
                 def push(value, key = value)
-                    @native.push(value)
+                    @native.insert(value, key)
                 end
                 
                 ##
-                # Pops value out of the queue.
+                # Pops value out of the queue. Note, value with minimal 
+                # priority will be popped out.
                 #
                 # @param [Object] queue value
                 # @abstract
                 #
                 
                 def pop
-                    @native.shift
+                    @native.delete_min
                 end
                 
                 ##
@@ -79,7 +80,7 @@ module UniversalQueues
                 #
                 
                 def length
-                    @native.length
+                    @native.size
                 end
                 
             end

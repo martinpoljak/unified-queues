@@ -25,7 +25,10 @@ module UniversalQueues
             :Array => "array",
             :Depq => "depq",
             :"Containers::Heap" => "algorithms",
-            :"Beanstalk::Pool" => "beanstalk-client"
+            :"Containers::PriorityQueue" => "algorithms",
+            :CPriorityQueue => "priority_queue",
+            :PoorPriorityQueue => "priority_queue",
+            :RubyPriorityQueue => "priority_queue" 
         ]
         
         ##
@@ -61,7 +64,7 @@ module UniversalQueues
             driver = nil
             self.class::DRIVERS.each_key do |name|
                 begin
-                    _module = Module::get_module(name)
+                    _module = Module::get_module(name.to_s)
                 rescue NameError
                     next
                 end
@@ -116,7 +119,7 @@ module UniversalQueues
             @driver.clear!
         end
         
-        alias :clear! :clear 
+        alias :clear :clear! 
         
         ##
         # Returns length of the queue.
@@ -128,3 +131,4 @@ module UniversalQueues
         end
     end
 end
+

@@ -25,10 +25,10 @@ module UniversalQueues
           
             ##
             # Holds native object.
-            # @returns [Object]
+            # @return [Object]
             #
             
-            array_accessor :native
+            attr_accessor :native
             @native
             
             ##
@@ -36,7 +36,7 @@ module UniversalQueues
             #
             
             def initialize(_class, *args, &block)
-                if self.instance_of? UniversalQueue::Single::Driver
+                if self.instance_of? UniversalQueues::Single::Driver
                     not_implemented
                 end
                 
@@ -88,7 +88,7 @@ module UniversalQueues
                 not_implemented
             end
             
-            alias :clear! :clear 
+            alias :clear :clear! 
             
             ##
             # Returns length of the queue.

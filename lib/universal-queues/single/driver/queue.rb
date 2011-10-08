@@ -23,11 +23,11 @@ module UniversalQueues
         class Driver
           
             ##
-            # Array queue driver. Uses standard library +Array+ class
-            # for queueing. Priority isn't supported.
+            # Queue queue driver. Uses standard library +Queue+ class
+            # for thread synchronized queueing. Priority isn't supported.
             #
             
-            class Array < Driver
+            class Queue < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority isn't supported.
@@ -48,7 +48,11 @@ module UniversalQueues
                 #
                 
                 def pop
-                    @native.shift
+                    begin
+                        @native.pop(true)
+                    rescue ThreadError
+                        nil
+                    end
                 end
                 
                 ##
