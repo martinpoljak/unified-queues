@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+# encoding: utf-8
+# (c) 2011 Martin Kozák (martinkozak@martinkozak.net)
+
+$:.push("./lib")
+$:.unshift("./lib")
+
+require "callback-locker"
+require "riot"
+  
+context "CallbackLocker" do
+    setup do
+        CallbackLocker::new
+    end
+    
+    asserts("#initialize") do
+        not topic.locked? and topic.stack == [ ]
+    end
+    asserts("#lock, #locked?") do
+        topic.lock
+        topic.locked?
+    end
+    asserts("#unlock, #unlocked?") do
+        topic.unlock
+        topic.unlocked?
+    end
+    asserts("#synchronize") do
+        foo1 = nil
+        topic.synchronize do
+            foo1 = :a
+        end
+        
+        foo2 = nil
+        topic.lock!
+        topic.synchronize do
+            foo2 = "1"
+        end
+        topic.synchronize do
+            foo2 << "2"
+        end
+        foo3 = foo2
+        topic.unlock!
+        
+        foo1 == :a and foo2 == "12" and foo3.nil?
+    end
+end
