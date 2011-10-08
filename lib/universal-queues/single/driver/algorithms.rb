@@ -84,64 +84,6 @@ module UniversalQueues
                     end
                     
                 end
-                
-              
-                ##
-                # Fibonacci heap queue driver. Uses the +Containers::PriorityQueue+ 
-                # class from +algorithms+ gem for queueing. Priority is supported.
-                #
-                
-                class PriorityQueue < Driver
-                    
-                    ##
-                    # Pushes the value into the queue. Priority is supported.
-                    #
-                    # @param [Object] value  value for push
-                    # @param [Object] key  key for priority queues
-                    #
-                    
-                    def push(value, key = value)
-                        @native.push(value, key)
-                    end
-                    
-                    ##
-                    # Pops value out of the queue. Value with minimal priority will be 
-                    # popped out.
-                    #
-                    # @return [Object] queued value
-                    #
-                    
-                    def pop
-                        @native.pop
-                    end
-                    
-                    ##
-                    # Indicates queue is empty.
-                    # @param [Boolean] +true+ if it's, +false+ otherwise
-                    #
-                    
-                    def empty?
-                        @native.empty?
-                    end
-                    
-                    ##
-                    # Clears the queue.
-                    #
-                  
-                    def clear
-                        @native.clear
-                    end
-                    
-                    ##
-                    # Returns length of the queue.
-                    # @return [Integer]
-                    #
-                    
-                    def length
-                        @native.size
-                    end
-                    
-                end
             end
         end
     end

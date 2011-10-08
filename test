@@ -5,42 +5,255 @@
 $:.push("./lib")
 $:.unshift("./lib")
 
-require "callback-locker"
+require "universal-queues"
 require "riot"
   
-context "CallbackLocker" do
+context "Single: Array (from Ruby STL)" do
     setup do
-        CallbackLocker::new
+        UniversalQueues::Single::new(Array)
     end
     
-    asserts("#initialize") do
-        not topic.locked? and topic.stack == [ ]
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
     end
-    asserts("#lock, #locked?") do
-        topic.lock
-        topic.locked?
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
     end
-    asserts("#unlock, #unlocked?") do
-        topic.unlock
-        topic.unlocked?
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
     end
-    asserts("#synchronize") do
-        foo1 = nil
-        topic.synchronize do
-            foo1 = :a
-        end
-        
-        foo2 = nil
-        topic.lock!
-        topic.synchronize do
-            foo2 = "1"
-        end
-        topic.synchronize do
-            foo2 << "2"
-        end
-        foo3 = foo2
-        topic.unlock!
-        
-        foo1 == :a and foo2 == "12" and foo3.nil?
+    asserts("#pop") do
+        topic.push(:foo)
+        topic.push(:bar)
+        topic.pop == :foo and topic.pop == :bar
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
     end
 end
+
+context "Single: Queue (from Ruby STL)" do
+    setup do
+        require "thread"
+        UniversalQueues::Single::new(Queue)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo)
+        topic.push(:bar)
+        topic.pop == :foo and topic.pop == :bar
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: Containers::Heap (from 'algorithms')" do
+    setup do
+        require "algorithms"
+        UniversalQueues::Single::new(Containers::Heap)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo, 2)
+        topic.push(:bar, 1)
+        topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: Depq (from 'depq')" do
+    setup do
+        require "depq"
+        UniversalQueues::Single::new(Depq)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo, 2)
+        topic.push(:bar, 1)
+        topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: CPriorityQueue (from 'priority_queue')" do
+    setup do
+        require "priority_queue/c_priority_queue"
+        UniversalQueues::Single::new(CPriorityQueue)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo, 2)
+        topic.push(:bar, 1)
+        topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: PoorPriorityQueue (from 'priority_queue')" do
+    setup do
+        require "priority_queue/poor_priority_queue"
+        UniversalQueues::Single::new(PoorPriorityQueue)
+    end
+    
+    asserts("#clear!") do
+        topic.push(:foo)
+        topic.clear!
+        topic.pop.nil?
+    end
+    asserts("#pop") do
+        topic.push(:foo, 2)
+        topic.push(:bar, 1)
+        topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: RubyPriorityQueue (from 'priority_queue')" do
+    setup do
+        require "priority_queue/ruby_priority_queue"
+        UniversalQueues::Single::new(RubyPriorityQueue)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo, 2)
+        topic.push(:bar, 1)
+        topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+

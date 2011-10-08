@@ -25,7 +25,6 @@ module UniversalQueues
             :Array => "array",
             :Depq => "depq",
             :"Containers::Heap" => "algorithms",
-            :"Containers::PriorityQueue" => "algorithms",
             :CPriorityQueue => "priority_queue",
             :PoorPriorityQueue => "priority_queue",
             :RubyPriorityQueue => "priority_queue" 
