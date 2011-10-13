@@ -14,7 +14,7 @@ module UniversalQueues
     #
     
     class Single
-    
+        
         ##
         # Contains assignment of classnames to drivers.
         # @return [Hash] 
@@ -32,7 +32,7 @@ module UniversalQueues
         
         ##
         # Contains driver for specific class instance.
-        # @return [UniversalQueues::Single::Abstract] driver instance
+        # @return [UniversalQueues::Single::Driver] driver instance
         #
 
         attr_accessor :driver
@@ -41,25 +41,25 @@ module UniversalQueues
         ##
         # Constructor.
         #
-        # @param [Class] _class  required class object
+        # @param [Class] cls  required class object
         # @param [Array] *args  array of arguments for the queue constructor
         # @param [Proc] &block  block for the queue constructor
         #
       
-        def initialize(_class, *args, &block)
-            self.assign_driver(_class, args, block)
+        def initialize(cls, *args, &block)
+            self.assign_driver(cls, args, block)
         end
         
         ##
         # Assigns driver to interface according to given class name.
         #
-        # @param [String] classname  name of the required class
+        # @param [Class] cls  required class
         # @param [Array] args  array of arguments for the queue constructor
         # @param [Proc] block  block for the queue constructor
         # 
         
-        def assign_driver(_class, args, block)
-            classname = _class.name
+        def assign_driver(cls, args, block)
+            classname = cls.name
             driver = nil
             self.class::DRIVERS.each_key do |name|
                 begin
@@ -87,8 +87,8 @@ module UniversalQueues
         # @param [Object] key  key for priority queues
         #
         
-        def push(value, key = value)
-            @driver.push(value, key)
+        def push(value, key = value, &block)
+            @driver.push(value, key, &block)
         end
         
         alias :<< :push
@@ -98,8 +98,8 @@ module UniversalQueues
         # @param [Object] queue value
         #
         
-        def pop
-            @driver.pop
+        def pop(&block)
+            @driver.pop(&block)
         end
         
         ##
@@ -107,16 +107,16 @@ module UniversalQueues
         # @param [Boolean] +true+ if it's, +false+ otherwise
         #
         
-        def empty?
-            @driver.empty?
+        def empty?(&block)
+            @driver.empty?(&block)
         end
         
         ##
         # Clears the queue.
         #
       
-        def clear!
-            @driver.clear!
+        def clear!(&block)
+            @driver.clear!(&block)
         end
         
         alias :clear :clear! 
@@ -126,11 +126,28 @@ module UniversalQueues
         # @return [Integer]
         #
         
-        def length
-            @driver.length
+        def length(&block)
+            @driver.length(&block)
         end
         
         alias :size :length
+        
+=begin
+        protected
+        
+        ##
+        # Returns value using yield or return according to driver settings.
+        #
+        # @return [Object]  returned value
+        # @yield [Object] returned value
+        #
+        
+        def __return
+            if @driver.linear?
+              
+            end
+        end
+=end
     end
 end
 

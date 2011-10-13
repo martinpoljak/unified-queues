@@ -35,12 +35,12 @@ module UniversalQueues
             # Constructor.
             #
             
-            def initialize(_class, *args, &block)
+            def initialize(cls, *args, &block)
                 if self.instance_of? UniversalQueues::Single::Driver
                     not_implemented
                 end
                 
-                @native = _class::new(*args, &block)
+                @native = cls::new(*args, &block)
             end
             
             ##
@@ -51,7 +51,7 @@ module UniversalQueues
             # @abstract
             #
             
-            def push(value, key = value)
+            def push(value, key = value, &block)
                 not_implemented
             end
             
@@ -64,7 +64,7 @@ module UniversalQueues
             # @abstract
             #
             
-            def pop
+            def pop(&block)
                 not_implemented
             end
             
@@ -75,7 +75,7 @@ module UniversalQueues
             # @abstract
             #
             
-            def empty?
+            def empty?(&block)
                 not_implemented
             end
             
@@ -84,7 +84,7 @@ module UniversalQueues
             # @abstract
             #
           
-            def clear!
+            def clear!(&block)
                 while not self.pop.nil?
                 end
             end 
@@ -98,11 +98,43 @@ module UniversalQueues
             # @abstract
             #
             
-            def length
+            def length(&block)
                 not_implemented
             end
             
             alias :size :length
+            
+            ##
+            # Returs type of the queue. Queue can be +:linear+ which means,
+            # calls values are returned using +return+ or +:evented+
+            # which indicates necessity of callbacks.
+            #
+            # @return [:linear, :evented]
+            # @abstract
+            #
+            
+            def type
+                not_implemented
+            end 
+            
+            ##
+            # Indicates, driver is evented so expexts callbacks.
+            # @return [Boolean] +true+ if it is, +false+ otherwise
+            # 
+            
+            def evented?
+                self.type == :evented
+            end
+            
+            ##
+            # Indicates, driver is evented so expexts callbacks.
+            # @return [Boolean] +true+ if it is, +false+ otherwise
+            # 
+            
+            def linear?
+                self.type == :linear
+            end
+            
         end
         
     end

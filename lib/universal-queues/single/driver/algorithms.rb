@@ -83,6 +83,15 @@ module UniversalQueues
                         @native.size
                     end
                     
+                    ##
+                    # Returs type of the queue.
+                    # @return [:linear]
+                    #
+                    
+                    def type
+                        :linear
+                    end
+                    
                 end
             end
         end

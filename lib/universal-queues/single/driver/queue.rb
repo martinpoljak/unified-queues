@@ -86,6 +86,15 @@ module UniversalQueues
                     @native.length
                 end
                 
+                ##
+                # Returs type of the queue.
+                # @return [:linear]
+                #
+                
+                def type
+                    :linear
+                end
+                
             end
         end
         
