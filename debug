@@ -5,6 +5,16 @@
 $:.push("./lib")
 $:.unshift("./lib")
 
+require "depq"
 require "universal-queues"
 
-p UniversalQueues::Multi::new(UniversalQueues::Single, Array)
+q = UniversalQueues::Multi::new(UniversalQueues::Single, Depq)
+q.use(:xxx)
+q.push("x", 2)
+q.push("y", 1)
+
+q.subscribe(:xxx)
+p q.pop
+p q.pop
+
+p q

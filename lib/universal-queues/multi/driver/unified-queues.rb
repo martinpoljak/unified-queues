@@ -101,9 +101,9 @@ module UniversalQueues
                     # @return [Queue] new queue
                     #
                     
-                    def create(name, cls = @class.first)
+                    def create(name, cls = @class)
                         if not name.in? @queues
-                            self[name] = cls::new(*cls.second, &cls.third)
+                            self[name] = cls.first::new(*cls.second, &cls.third)
                         else
                             self[name]
                         end        
