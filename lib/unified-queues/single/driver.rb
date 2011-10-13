@@ -5,10 +5,10 @@ require "abstract"
 
 
 ##
-# Base Universal Queues module.
+# Base +Unified Queues+ module.
 #
 
-module UniversalQueues
+module UnifiedQueues
   
     ##
     # Universal single queue interface.
@@ -36,7 +36,7 @@ module UniversalQueues
             #
             
             def initialize(cls, *args, &block)
-                if self.instance_of? UniversalQueues::Single::Driver
+                if self.instance_of? UnifiedQueues::Single::Driver
                     not_implemented
                 end
                 

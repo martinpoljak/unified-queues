@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/martinkozak/unified-locker"
   gem.license = "MIT"
   gem.summary = 'Unifies many queue implementations under the single interface. Includes both single queue libraries and multiple queue libraries.'
-    gem.email = "martinkozak@martinkozak.net"
+  gem.email = "martinkozak@martinkozak.net"
   gem.authors = ["Martin Kozák"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)

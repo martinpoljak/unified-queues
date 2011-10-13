@@ -4,10 +4,10 @@
 require "hash-utils/module"
 
 ##
-# Base Universal Queues module.
+# Base 9Unified Queues+ module.
 #
 
-module UniversalQueues
+module UnifiedQueues
       
     ##
     # More queues single interface.
@@ -21,13 +21,13 @@ module UniversalQueues
         #
           
         DRIVERS = Hash[
-            :"UniversalQueues::Single" => "unified-queues.rb",
+            :"UnifiedQueues::Single" => "unified-queues.rb",
 #            :"UniversalQueues::Multi" => "unified-queues.rb"
         ]
 
         ##
         # Contains driver for specific class instance.
-        # @return [UniversalQueues::Multi::Driver] driver instance
+        # @return [UnifiedQueues::Multi::Driver] driver instance
         #
 
         attr_accessor :driver
@@ -69,11 +69,11 @@ module UniversalQueues
                 end
             end
             
-            require "universal-queues/multi/driver/" << driver
+            require "unified-queues/multi/driver/" << driver
             
             path = classname.split("::")
             classname = path.shift << 'Driver::' << path.join('::')
-            _module = Module::get_module("UniversalQueues::Multi::Driver::" << classname)
+            _module = Module::get_module("UnifiedQueues::Multi::Driver::" << classname)
 
             args = [cls] + args
             @driver = _module::new(*args, &block)

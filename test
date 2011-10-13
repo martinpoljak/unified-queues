@@ -5,12 +5,12 @@
 $:.push("./lib")
 $:.unshift("./lib")
 
-require "universal-queues"
+require "unified-queues"
 require "riot"
   
 context "Single: Array (from Ruby STL)" do
     setup do
-        UniversalQueues::Single::new(Array)
+        UnifiedQueues::Single::new(Array)
     end
     
     asserts("#clear!") do
@@ -48,7 +48,7 @@ end
 context "Single: Queue (from Ruby STL)" do
     setup do
         require "thread"
-        UniversalQueues::Single::new(Queue)
+        UnifiedQueues::Single::new(Queue)
     end
     
     asserts("#clear!") do
@@ -86,7 +86,7 @@ end
 context "Single: Containers::Heap (from 'algorithms')" do
     setup do
         require "algorithms"
-        UniversalQueues::Single::new(Containers::Heap)
+        UnifiedQueues::Single::new(Containers::Heap)
     end
     
     asserts("#clear!") do
@@ -124,7 +124,7 @@ end
 context "Single: Depq (from 'depq')" do
     setup do
         require "depq"
-        UniversalQueues::Single::new(Depq)
+        UnifiedQueues::Single::new(Depq)
     end
     
     asserts("#clear!") do
@@ -162,7 +162,7 @@ end
 context "Single: CPriorityQueue (from 'priority_queue')" do
     setup do
         require "priority_queue/c_priority_queue"
-        UniversalQueues::Single::new(CPriorityQueue)
+        UnifiedQueues::Single::new(CPriorityQueue)
     end
     
     asserts("#clear!") do
@@ -200,7 +200,7 @@ end
 context "Single: PoorPriorityQueue (from 'priority_queue')" do
     setup do
         require "priority_queue/poor_priority_queue"
-        UniversalQueues::Single::new(PoorPriorityQueue)
+        UnifiedQueues::Single::new(PoorPriorityQueue)
     end
     
     asserts("#clear!") do
@@ -222,7 +222,7 @@ end
 context "Single: RubyPriorityQueue (from 'priority_queue')" do
     setup do
         require "priority_queue/ruby_priority_queue"
-        UniversalQueues::Single::new(RubyPriorityQueue)
+        UnifiedQueues::Single::new(RubyPriorityQueue)
     end
     
     asserts("#clear!") do

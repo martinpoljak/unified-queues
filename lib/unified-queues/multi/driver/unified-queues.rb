@@ -5,10 +5,10 @@ require "hash-utils/array"
 require "hash-utils/object"
 
 ##
-# Base Universal Queues module.
+# Base +Unified Queues+ module.
 #
 
-module UniversalQueues
+module UnifiedQueues
   
     ##
     # Universal multi queue interface.
@@ -27,7 +27,7 @@ module UniversalQueues
             # Wraper according to +UnifiedQueues::Single+ internal structure.
             #
             
-            module UniversalQueuesDriver
+            module UnifiedQueuesDriver
                 
                 ##
                 # Multi queue driver for unified queues single queue interface.

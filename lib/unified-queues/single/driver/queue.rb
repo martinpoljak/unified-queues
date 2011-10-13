@@ -1,13 +1,13 @@
 # encoding: utf-8
 # (c) 2011 Martin Kozák (martinkozak@martinkozak.net)
 
-require "universal-queues/single/driver"
+require "unified-queues/single/driver"
 
 ##
-# Base Universal Queues module.
+# Base +Unified Queues+ module.
 #
 
-module UniversalQueues
+module UnifiedQueues
   
     ##
     # Universal single queue interface.

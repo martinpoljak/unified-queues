@@ -6,9 +6,9 @@ $:.push("./lib")
 $:.unshift("./lib")
 
 require "depq"
-require "universal-queues"
+require "unified-queues"
 
-q = UniversalQueues::Multi::new(UniversalQueues::Single, Depq)
+q = UnifiedQueues::Multi::new(UnifiedQueues::Single, Depq)
 q.use(:xxx)
 q.push("x", 2)
 q.push("y", 1)

@@ -5,10 +5,10 @@ require "abstract"
 
 
 ##
-# Base Universal Queues module.
+# Base +Unified Queues+ module.
 #
 
-module UniversalQueues
+module UnifiedQueues
   
     ##
     # More queues single interface.
