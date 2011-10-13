@@ -22,7 +22,7 @@ module UnifiedQueues
           
         DRIVERS = Hash[
             :"UnifiedQueues::Single" => "unified-queues.rb",
-#            :"UniversalQueues::Multi" => "unified-queues.rb"
+            :"EMJack::Connection" => "em-jack.rb"
         ]
 
         ##
@@ -101,17 +101,6 @@ module UnifiedQueues
         def pop(&block)
             @driver.pop(&block)
         end
-        
-        ##
-        # Returns named queue from instance.
-        # @param [Object] name  queue name
-        # 
-        
-        def get(name, &block)
-            @driver.get(name, &block)
-        end
-        
-        alias :[] :get
         
         ##
         # Sets queue with given name as used. So marks it as target 
