@@ -68,15 +68,19 @@ module UniversalQueues
                     next
                 end
                 
-                if _class <= _module
+                if cls <= _module
                     driver = self.class::DRIVERS[classname.to_sym]
                     break
                 end
             end
             
             require "universal-queues/single/driver/" << driver
+            
+            path = classname.split("::")
+            classname = path.shift << 'Driver::' << path.join('::')
             _module = Module::get_module("UniversalQueues::Single::Driver::" << classname)
-            args = [_class] + args
+            
+            args = [cls] + args
             @driver = _module::new(*args, &block)
         end
         

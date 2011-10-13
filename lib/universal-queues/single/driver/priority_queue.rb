@@ -31,7 +31,7 @@ module UniversalQueues
             # it falls backs to naive "popping" style clearing.
             #
             
-            class CPriorityQueue < Driver
+            class CPriorityQueueDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority is supported.
@@ -97,7 +97,7 @@ module UniversalQueues
             # will throw an exception.
             #
             
-            class PoorPriorityQueue < Driver
+            class PoorPriorityQueueDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority is supported.
@@ -153,7 +153,7 @@ module UniversalQueues
             # it falls backs to naive "popping" style clearing.
             #
             
-            class RubyPriorityQueue < Driver
+            class RubyPriorityQueueDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority is supported.

@@ -26,7 +26,7 @@ module UniversalQueues
             # Wrapper according to +algorithm+ library.
             #
             
-            module Containers
+            module ContainersDriver
               
                 ##
                 # Fibonacci heap queue driver. Uses the +Containers::Heap+ 

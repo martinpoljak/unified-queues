@@ -1,6 +1,10 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    PriorityQueue (0.1.2)
+    abstract (1.0.0)
+    algorithms (0.3.0)
+    depq (0.4)
     git (1.2.5)
     jeweler (1.6.4)
       bundler (~> 1.0)
@@ -15,6 +19,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  PriorityQueue
+  abstract (>= 1.0.0)
+  algorithms
   bundler (>= 1.0.0)
+  depq
   jeweler (>= 1.5.2)
   riot (>= 0.12.3)

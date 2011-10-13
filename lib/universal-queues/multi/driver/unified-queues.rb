@@ -27,7 +27,7 @@ module UniversalQueues
             # Wraper according to +UnifiedQueues::Single+ internal structure.
             #
             
-            module UnifiedQueues
+            module UniversalQueuesDriver
                 
                 ##
                 # Multi queue driver for unified queues single queue interface.

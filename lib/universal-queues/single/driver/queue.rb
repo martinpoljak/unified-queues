@@ -27,7 +27,7 @@ module UniversalQueues
             # for thread synchronized queueing. Priority isn't supported.
             #
             
-            class Queue < Driver
+            class QueueDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority isn't supported.

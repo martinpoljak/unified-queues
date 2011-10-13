@@ -27,7 +27,7 @@ module UniversalQueues
             # for queueing. Priority isn't supported.
             #
             
-            class Array < Driver
+            class ArrayDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority isn't supported.

@@ -63,24 +63,31 @@ module UniversalQueues
                     next
                 end
                 
-                if _class <= _module
+                if cls <= _module
                     driver = self.class::DRIVERS[classname.to_sym]
                     break
                 end
             end
             
             require "universal-queues/multi/driver/" << driver
+            
+            path = classname.split("::")
+            classname = path.shift << 'Driver::' << path.join('::')
             _module = Module::get_module("UniversalQueues::Multi::Driver::" << classname)
-            args = [_class] + args
+
+            args = [cls] + args
             @driver = _module::new(*args, &block)
         end
         
         ##
         # Pushes value to the currently used queue.
+        #
         # @param [Object] value
+        # @param [Object] key key for priority purposes
         #
         
-        def push(value, &block)
+        def push(value, key = value, &block)
+            @driver.push(value, key, &block)
         end
         
         ##
@@ -92,29 +99,8 @@ module UniversalQueues
         #
         
         def pop(&block)
+            @driver.pop(&block)
         end
-        
-        ##
-        # Creates new queue under given name.
-        #
-        # @param [Object] name identification
-        # @return [Queue] new queue
-        #
-        
-        def create(name, cls = @class, &block)
-        end
-        
-        ##
-        # Inserts queue instance to queues.
-        # 
-        # @param [Object] name identification
-        # @param [Object] queue  heap instance
-        # 
-        
-        def insert(name, queue, &block) 
-        end 
-        
-        alias :[]= :insert
         
         ##
         # Returns named queue from instance.
@@ -122,6 +108,7 @@ module UniversalQueues
         # 
         
         def get(name, &block)
+            @driver.get(name, &block)
         end
         
         alias :[] :get
@@ -134,6 +121,7 @@ module UniversalQueues
         #
         
         def use(name, &block)
+            @driver.use(name, &block)
         end
         
         ##
@@ -144,6 +132,7 @@ module UniversalQueues
         #
         
         def subscribe(name, &block)
+            @driver.subscribe(name, &block)
         end
         
         ##
@@ -152,6 +141,7 @@ module UniversalQueues
         #
          
         def used(&block)
+            @driver.used(&block)
         end
         
         ##
@@ -160,6 +150,7 @@ module UniversalQueues
         #
             
         def subscribed(&block)
+            @driver.subscribed(&block)
         end
             
         ##
@@ -168,6 +159,7 @@ module UniversalQueues
         #
         
         def list(&block)
+            @driver.list(&block)
         end
         
         ##
@@ -176,6 +168,7 @@ module UniversalQueues
         #
         
         def list_used(&block)
+            @driver.list_used(&block)
         end
     
         ##
@@ -184,6 +177,7 @@ module UniversalQueues
         #
             
         def list_subscribed(&block)
+            @driver.list_subscribed(&block)
         end
         
     end

@@ -27,7 +27,7 @@ module UniversalQueues
             # for queueing. Priority is supported.
             #
             
-            class Depq < Driver
+            class DepqDriver < Driver
                 
                 ##
                 # Pushes the value into the queue. Priority is supported.
