@@ -42,12 +42,13 @@ module UnifiedQueues
                 
                 ##
                 # Pops value out of the queue. Note, value with minimal 
-                # priority will be popped out.
+                # priority will be popped out. Blocking isn'ŧ supported.
                 #
+                # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
                 # @return [Object] queued value
                 #
                 
-                def pop
+                def pop(blocking = false)
                     @native.delete_min
                 end
                 
@@ -64,7 +65,7 @@ module UnifiedQueues
                 # Clears the queue.
                 #
               
-                def clear
+                def clear!
                     @native.clear
                 end
                 

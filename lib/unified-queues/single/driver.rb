@@ -60,11 +60,12 @@ module UnifiedQueues
             ##
             # Pops value out of the queue.
             #
+            # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
             # @param [Object] queue value
             # @abstract
             #
             
-            def pop(&block)
+            def pop(blocking = false, &block)
                 not_implemented
             end
             

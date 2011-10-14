@@ -79,19 +79,20 @@ module UnifiedQueues
                     # @param [Object] key key for priority queues
                     #
                     
-                    def push(value, key = value)
-                        self.used.push(value, key)
+                    def push(value, key = value, &block)
+                        self.used.push(value, key, &block)
                     end
                     
                     ##
                     # Pops value from the queue. In contrast to default Queue library,
                     # blocks or returns +nil+ if empty.
                     # 
+                    # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
                     # @return [Object|nil] 
                     #
                     
-                    def pop
-                        self.subscribed.pop
+                    def pop(blocking = false, &block)
+                        self.subscribed.pop(blocking, &block)
                     end
                     
                     ##

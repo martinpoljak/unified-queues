@@ -5,16 +5,29 @@
 $:.push("./lib")
 $:.unshift("./lib")
 
-require "depq"
+require "em-jack"
 require "unified-queues"
+require "em-batch"
 
-q = UnifiedQueues::Multi::new(UnifiedQueues::Single, Depq)
-q.use(:xxx)
-q.push("x", 2)
-q.push("y", 1)
-
-q.subscribe(:xxx)
-p q.pop
-p q.pop
-
-p q
+EM::run do
+    q = UnifiedQueues::Multi::new(EMJack::Connection)
+    
+    queue = EM::Sequencer::new(q)
+    queue.use(:xxx)
+    queue.push("x", 2)
+    queue.push("y", 1)
+    queue.subscribe(:xxx)
+    
+    queue.execute do
+        queue = EM::Sequencer::new(q)
+        queue.pop
+        queue.pop
+        queue.pop
+          
+        queue.execute do
+            p queue.results
+            
+            #q.pop 
+        end
+    end
+end

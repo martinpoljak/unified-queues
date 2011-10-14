@@ -46,8 +46,8 @@ module UnifiedQueues
                     # Constructor.
                     #
                     
-                    def initialize(native)
-                        @native = native
+                    def initialize(cls, *args, &block)
+                        @native = cls::new(*args, &block)
                     end
                     
                     ##
@@ -65,13 +65,22 @@ module UnifiedQueues
                     # Pops value from the queue. In contrast to default Queue library,
                     # blocks or returns +nil+ if empty.
                     # 
+                    # @param [Boolean] blocking  indicates, it should block or not
                     # @return [Object|nil] 
                     #
                     
-                    def pop(&block)
-                        @native.reserve do |job|
-                            yield job.body
-                            @native.delete(job)
+                    def pop(blocking = false, &block)
+                        timeout = blocking ? nil : 0
+                        job = @native.reserve(timeout)
+
+                        job.callback do |job|
+                            result = job.body
+                            @native.delete(job) do 
+                                yield result
+                            end
+                        end
+                        job.errback do
+                            yield nil
                         end
                     end
                     

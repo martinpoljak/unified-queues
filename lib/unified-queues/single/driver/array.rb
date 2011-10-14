@@ -41,11 +41,13 @@ module UnifiedQueues
                 end
                 
                 ##
-                # Pops value out of the queue.
+                # Pops value out of the queue. Blocking isn'ŧ supported.
+                #
+                # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
                 # @return [Object] out-queued value
                 #
                 
-                def pop
+                def pop(blocking = false)
                     @native.shift
                 end
                 
@@ -62,7 +64,7 @@ module UnifiedQueues
                 # Clears the queue.
                 #
               
-                def clear
+                def clear!
                     @native.clear
                 end
                 

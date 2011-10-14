@@ -99,11 +99,13 @@ module UnifiedQueues
         
         ##
         # Pops value out of the queue.
+        #
+        # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
         # @param [Object] queue value
         #
         
-        def pop(&block)
-            @driver.pop(&block)
+        def pop(blocking = false, &block)
+            @driver.pop(blocking, &block)
         end
         
         ##

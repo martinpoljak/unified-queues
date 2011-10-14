@@ -55,8 +55,8 @@ context "Single: Queue (from Ruby STL)" do
         initial = topic.empty?
         topic.push(:foo)
         topic.clear!
-        after = topic.empty?
-        initial and after
+        #after = topic.empty?
+        #initial and after
     end
     asserts("#empty?") do
         initial = topic.empty?

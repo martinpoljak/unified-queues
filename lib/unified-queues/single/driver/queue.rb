@@ -2,6 +2,7 @@
 # (c) 2011 Martin Kozák (martinkozak@martinkozak.net)
 
 require "unified-queues/single/driver"
+require "hash-utils"
 
 ##
 # Base +Unified Queues+ module.
@@ -43,13 +44,19 @@ module UnifiedQueues
                 ##
                 # Pops value out of the queue.
                 #
+                # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
                 # @param [Object] queue value
-                # @abstract
                 #
                 
-                def pop
+                def pop(blocking = false)
+                    if blocking.boolean?
+                        timeout = !blocking
+                    else
+                        timeout = blocking                        
+                    end
+
                     begin
-                        @native.pop(true)
+                        @native.pop(blocking)
                     rescue ThreadError
                         nil
                     end
@@ -57,9 +64,7 @@ module UnifiedQueues
                 
                 ##
                 # Indicates queue is empty.
-                #
                 # @param [Boolean] +true+ if it's, +false+ otherwise
-                # @abstract
                 #
                 
                 def empty?
@@ -68,18 +73,15 @@ module UnifiedQueues
                 
                 ##
                 # Clears the queue.
-                # @abstract
                 #
               
-                def clear
+                def clear!
                     @native.clear
                 end
                 
                 ##
                 # Returns length of the queue.
-                #
                 # @return [Integer]
-                # @abstract
                 #
                 
                 def length

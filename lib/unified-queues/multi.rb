@@ -94,12 +94,12 @@ module UnifiedQueues
         # Pops value from the queue. In contrast to default Queue library,
         # blocks or returns +nil+ if empty.
         # 
-        # @param [Boolean] nonblock  +true+ if it should block, +false+ othwrwise
+        # @param [Boolean|Integer] blocking  +true+ or timeout if it should block, +false+ otherwise
         # @return [Object|nil] 
         #
         
-        def pop(&block)
-            @driver.pop(&block)
+        def pop(blocking = false, &block)
+            @driver.pop(blocking, &block)
         end
         
         ##
