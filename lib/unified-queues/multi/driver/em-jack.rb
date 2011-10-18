@@ -62,25 +62,20 @@ module UnifiedQueues
                     end
                     
                     ##
-                    # Pops value from the queue. In contrast to default Queue library,
-                    # blocks or returns +nil+ if empty.
+                    # Pops value from the queue. Callback is recurring, so it will 
+                    # keep callback active after +#pop+.
                     # 
                     # @param [Boolean] blocking  indicates, it should block or not
-                    # @return [Object|nil] 
+                    # @return [Object, nil] 
                     #
                     
                     def pop(blocking = false, &block)
                         timeout = blocking ? nil : 0
-                        job = @native.reserve(timeout)
-
-                        job.callback do |job|
+                        @native.each_job(timeout) do |job|
                             result = job.body
-                            @native.delete(job) do 
+                            job.delete do
                                 yield result
                             end
-                        end
-                        job.errback do
-                            yield nil
                         end
                     end
                     
