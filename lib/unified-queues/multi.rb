@@ -36,13 +36,17 @@ module UnifiedQueues
         ##
         # Constructor.
         #
-        # @param [Class] cls  required class object
+        # @param [Class|UnifiedQueues::Multi::Driver] cls  required class object or driver instance
         # @param [Array] *args  array of arguments for the queue constructor
         # @param [Proc] &block  block for the queue constructor
         #
         
         def initialize(cls, *args, &block)
-            self.assign_driver(cls, args, block)
+            if cls.kind_of? UnifiedQueues::Multi::Driver
+                @driver = cls
+            else
+                self.assign_driver(cls, args, block)
+            end
         end
         
         ##
@@ -51,6 +55,7 @@ module UnifiedQueues
         # @param [Class] cls  required class
         # @param [Array] args  array of arguments for the queue constructor
         # @param [Proc] block  block for the queue constructor
+        # @return [UnifiedQueues::Multi::Driver] new driver instance
         # 
         
         def assign_driver(cls, args, block)
@@ -77,6 +82,7 @@ module UnifiedQueues
 
             args = [cls] + args
             @driver = _module::new(*args, &block)
+            return @driver
         end
         
         ##
