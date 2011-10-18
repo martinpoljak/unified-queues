@@ -122,13 +122,23 @@ module UnifiedQueues
         
         ##
         # Subscribes to the queue. So marks it as target for {#pop}.
-        # Note, than only single queue can be subscribed at one time.
+        # Note, than only single queue usally can be subscribed at 
+        # one time.
         #
         # @param [Object] name  name of the required queue
         #
         
         def subscribe(name, &block)
             @driver.subscribe(name, &block)
+        end
+        
+        ##
+        # Unsubscribes from the queue.
+        # @param [Object] name  name of the required queue
+        #
+        
+        def unsubscribe(name, &block)
+            @driver.unsubscribe(name, &block)
         end
         
         ##
@@ -175,6 +185,16 @@ module UnifiedQueues
         def list_subscribed(&block)
             @driver.list_subscribed(&block)
         end
+        
+        ##
+        # Closes the session.
+        #
+        
+        def close(&block)
+            @driver.close(&block)  
+        end
+        
+        alias :close! :close
         
     end
 end

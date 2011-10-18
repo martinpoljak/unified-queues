@@ -159,6 +159,15 @@ module UnifiedQueues
                     end
                     
                     ##
+                    # Unsubscribes from the queue.
+                    # @param [Object] name  name of the required queue\
+                    #
+                    
+                    def unsubscribe(name, &block)
+                        @subscribed = nil
+                    end
+                    
+                    ##
                     # Currently used queue.
                     # @return [Queue]
                     #

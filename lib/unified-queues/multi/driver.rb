@@ -92,6 +92,17 @@ module UnifiedQueues
             end
             
             ##
+            # Unsubscribes from the queue.
+            #
+            # @param [Object] name  name of the required queue\
+            # @abstract
+            #
+            
+            def unsubscribe(name, &block)
+                not_implemented
+            end
+            
+            ##
             # Currently used queue.
             #
             # @return [Queue]
@@ -145,6 +156,16 @@ module UnifiedQueues
             def list_subscribed(&block)
                 not_implemented
             end
+
+            ##
+            # Closes the session.
+            #
+            
+            def close(&block)
+                yield if not block.nil?
+            end
+            
+            alias :close! :close
            
         end
     end
