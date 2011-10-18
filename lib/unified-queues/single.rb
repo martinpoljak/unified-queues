@@ -27,7 +27,8 @@ module UnifiedQueues
             :"Containers::Heap" => "algorithms",
             :CPriorityQueue => "priority_queue",
             :PoorPriorityQueue => "priority_queue",
-            :RubyPriorityQueue => "priority_queue" 
+            :RubyPriorityQueue => "priority_queue",
+            :EventedQueue => "evented-queue" 
         ]
         
         ##

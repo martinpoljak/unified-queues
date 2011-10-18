@@ -6,6 +6,8 @@ GEM
     algorithms (0.3.0)
     depq (0.4)
     git (1.2.5)
+    hash-utils (0.19.0)
+      ruby-version
     jeweler (1.6.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
@@ -14,6 +16,7 @@ GEM
     riot (0.12.5)
       rr
     rr (1.0.4)
+    ruby-version (0.3.1)
 
 PLATFORMS
   ruby
@@ -24,5 +27,6 @@ DEPENDENCIES
   algorithms
   bundler (>= 1.0.0)
   depq
+  hash-utils (>= 0.18.1)
   jeweler (>= 1.5.2)
   riot (>= 0.12.3)
