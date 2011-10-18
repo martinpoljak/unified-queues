@@ -5,6 +5,9 @@ GEM
     abstract (1.0.0)
     algorithms (0.3.0)
     depq (0.4)
+    evented-queue (0.1.0)
+      abstract
+      unified-queues
     git (1.2.5)
     hash-utils (0.19.0)
       ruby-version
@@ -17,6 +20,9 @@ GEM
       rr
     rr (1.0.4)
     ruby-version (0.3.1)
+    unified-queues (0.1.0)
+      abstract (>= 1.0.0)
+      hash-utils (>= 0.18.1)
 
 PLATFORMS
   ruby
@@ -27,6 +33,7 @@ DEPENDENCIES
   algorithms
   bundler (>= 1.0.0)
   depq
+  evented-queue
   hash-utils (>= 0.18.1)
   jeweler (>= 1.5.2)
   riot (>= 0.12.3)

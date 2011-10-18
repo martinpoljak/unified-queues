@@ -62,25 +62,28 @@ module UnifiedQueues
         def assign_driver(cls, args, block)
             classname = cls.name
             driver = nil
-            self.class::DRIVERS.each_key do |name|
+            name = nil
+            
+            self.class::DRIVERS.each_pair do |_name, _driver|
                 begin
-                    _module = Module::get_module(name.to_s)
+                    _module = Module::get_module(_name.to_s)
                 rescue NameError
                     next
                 end
-                
+                p classname
                 if cls <= _module
-                    driver = self.class::DRIVERS[classname.to_sym]
+                    driver = _driver
+                    name = _name
                     break
                 end
             end
             
             require "unified-queues/multi/driver/" << driver
             
-            path = classname.split("::")
+            path = name.to_s.split("::")
             classname = path.shift << 'Driver::' << path.join('::')
             _module = Module::get_module("UnifiedQueues::Multi::Driver::" << classname)
-
+            
             args = [cls] + args
             @driver = _module::new(*args, &block)
             return @driver
