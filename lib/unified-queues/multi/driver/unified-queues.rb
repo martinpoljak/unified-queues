@@ -141,9 +141,10 @@ module UnifiedQueues
                     # @param [Object] name name of the required queue 
                     #
                     
-                    def use(name)
+                    def use(name, &block)
                         self.create(name)
                         @used = [name, self[name]]
+                        yield if not block.nil?
                     end
                     
                     ##
@@ -153,9 +154,10 @@ module UnifiedQueues
                     # @param [Object] name  name of the required queue
                     #
                     
-                    def subscribe(name)
+                    def subscribe(name, &block)
                         self.create(name)
-                        @subscribed = [name, self[name]]        
+                        @subscribed = [name, self[name]]
+                        yield if not block.nil?        
                     end
                     
                     ##
@@ -164,7 +166,11 @@ module UnifiedQueues
                     #
                     
                     def unsubscribe(name, &block)
-                        @subscribed = nil
+                        if not @subscribed.nil? and (@subscribed.first == name)
+                            @subscribed = nil
+                        end
+                        
+                        yield if not block.nil?
                     end
                     
                     ##
@@ -172,8 +178,9 @@ module UnifiedQueues
                     # @return [Queue]
                     #
                      
-                    def used
-                        @used.second
+                    def used(&block)
+                        yield @used.second if not block.nil?
+                        return @used.second
                     end
                     
                     ##
@@ -181,8 +188,9 @@ module UnifiedQueues
                     # @return [Queue]
                     #
                         
-                    def subscribed
-                        @subscribed.second
+                    def subscribed(&block)
+                        yield @subscribed.second if not block.nil?
+                        return @subscribed.second
                     end
                         
                     ##

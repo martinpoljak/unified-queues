@@ -41,7 +41,7 @@ module UnifiedQueues
                 #
                 
                 def push(value, key = value)
-                    @native.push(value, key)
+                    @native.push(value, key.to_i)
                 end
                 
                 ##
