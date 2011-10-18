@@ -112,7 +112,7 @@ module UnifiedQueues
                     #
                     
                     def unsubscribe(name, &block)
-                        @native.ignore(name, block)
+                        @native.ignore(name, &block)
                     end
                     
                     ##
