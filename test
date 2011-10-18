@@ -55,8 +55,8 @@ context "Single: Queue (from Ruby STL)" do
         initial = topic.empty?
         topic.push(:foo)
         topic.clear!
-        #after = topic.empty?
-        #initial and after
+        after = topic.empty?
+        initial and after
     end
     asserts("#empty?") do
         initial = topic.empty?
@@ -152,6 +152,44 @@ context "Single: Depq (from 'depq')" do
         topic.push(:foo, 2)
         topic.push(:bar, 1)
         topic.pop == :bar and topic.pop == :foo
+    end
+    asserts("#push") do
+        topic.push(:foo)
+        topic.pop == :foo
+    end
+end
+
+context "Single: EventedQueue (from 'evented-queue')" do
+    setup do
+        require "evented-queue"
+        UnifiedQueues::Single::new(EventedQueue)
+    end
+    
+    asserts("#clear!") do
+        initial = topic.empty?
+        topic.push(:foo)
+        topic.clear!
+        after = topic.empty?
+        initial and after
+    end
+    asserts("#empty?") do
+        initial = topic.empty?
+        topic.push(:foo)
+        after = topic.empty?
+        topic.pop
+        initial and not after
+    end
+    asserts("#length") do
+        initial = topic.length
+        topic.push(:foo)
+        after = topic.length
+        topic.pop
+        initial == 0 and after == 1
+    end
+    asserts("#pop") do
+        topic.push(:foo)
+        topic.push(:bar)
+        topic.pop == :foo and topic.pop == :bar
     end
     asserts("#push") do
         topic.push(:foo)

@@ -13,4 +13,5 @@ group :development do
   gem "PriorityQueue", ">= 0"
   gem "algorithms", ">= 0"
   gem "depq", ">= 0"
+  gem "evented-queue", ">= 0"
 end

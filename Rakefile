@@ -16,7 +16,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "unified-queues"
-  gem.homepage = "http://github.com/martinkozak/unified-locker"
+  gem.homepage = "http://github.com/martinkozak/unified-queue"
   gem.license = "MIT"
   gem.summary = 'Unifies many queue implementations under the single interface. Includes both single queue libraries and multiple queue libraries.'
   gem.email = "martinkozak@martinkozak.net"
