@@ -70,7 +70,7 @@ module UnifiedQueues
                 rescue NameError
                     next
                 end
-                p classname
+
                 if cls <= _module
                     driver = _driver
                     name = _name
