@@ -40,7 +40,11 @@ module UnifiedQueues
                     not_implemented
                 end
                 
-                @native = cls::new(*args, &block)
+                if cls.kind_of? Class
+                    @native = cls::new(*args, &block)
+                else
+                    @native = cls
+                end
             end
             
             ##

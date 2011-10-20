@@ -66,7 +66,6 @@ module UnifiedQueues
         # 
         
         def assign_driver(cls, args, block)
-            classname = cls.name
             driver = nil
             name = nil
             
@@ -83,6 +82,8 @@ module UnifiedQueues
                     break
                 end
             end
+            
+            ###
             
             require "unified-queues/single/driver/" << driver
             

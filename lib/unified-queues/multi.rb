@@ -60,7 +60,6 @@ module UnifiedQueues
         # 
         
         def assign_driver(cls, args, block)
-            classname = cls.name
             driver = nil
             name = nil
             
@@ -70,13 +69,15 @@ module UnifiedQueues
                 rescue NameError
                     next
                 end
-
+                
                 if cls <= _module
                     driver = _driver
                     name = _name
                     break
                 end
             end
+            
+            ###
             
             require "unified-queues/multi/driver/" << driver
             
