@@ -66,6 +66,11 @@ module UnifiedQueues
         # 
         
         def assign_driver(cls, args, block)
+            _cls = cls
+            if not _cls.kind_of? Class
+                _cls = cls.class
+            end
+          
             driver = nil
             name = nil
             
@@ -76,7 +81,7 @@ module UnifiedQueues
                     next
                 end
                 
-                if cls <= _module
+                if _cls <= _module
                     driver = _driver
                     name = _name
                     break
