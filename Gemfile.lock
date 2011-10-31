@@ -4,18 +4,20 @@ GEM
     PriorityQueue (0.1.2)
     abstract (1.0.0)
     algorithms (0.3.0)
-    depq (0.4)
+    depq (0.5)
     evented-queue (0.1.0)
       abstract
       unified-queues
     git (1.2.5)
-    hash-utils (0.19.0)
+    hash-utils (1.1.0)
       ruby-version
     jeweler (1.6.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
-    rake (0.9.2)
+    lookup-hash (0.2.0)
+      hash-utils (>= 0.11.0)
+    rake (0.9.2.2)
     riot (0.12.5)
       rr
     rr (1.0.4)
@@ -36,4 +38,5 @@ DEPENDENCIES
   evented-queue
   hash-utils (>= 0.18.1)
   jeweler (>= 1.5.2)
+  lookup-hash
   riot (>= 0.12.3)

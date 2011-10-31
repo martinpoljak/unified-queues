@@ -70,7 +70,7 @@ module UnifiedQueues
             if not _cls.kind_of? Class
                 _cls = cls.class
             end
-          
+            
             driver = nil
             name = nil
             

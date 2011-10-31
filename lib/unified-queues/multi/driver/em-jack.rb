@@ -3,6 +3,7 @@
 
 require "hash-utils/array"
 require "hash-utils/object"
+require "lookup-hash"
 
 ##
 # Base +Unified Queues+ module.
@@ -41,6 +42,20 @@ module UnifiedQueues
                     #
                     
                     @native
+                    
+                    ##
+                    # Tracks currently used queue name.
+                    # @return Object
+                    #
+                    
+                    @used_name
+                    
+                    ##
+                    # Tracks currently subscribed queue names.
+                    # @return [LookupHash]
+                    #
+                    
+                    @subscribed_names
                      
                     ##
                     # Constructor.
@@ -48,6 +63,8 @@ module UnifiedQueues
                     
                     def initialize(cls, *args, &block)
                         @native = cls::new(*args, &block)
+                        @subscribed_names = LookupHash["default"]
+                        @used_name = "default"
                     end
                     
                     ##
@@ -87,7 +104,14 @@ module UnifiedQueues
                     #
                     
                     def use(name, &block)
-                        @native.use(name, &block)
+                        if name != @used_name
+                            @used_name = name
+                            @native.use(name, &block)
+                        elsif not block.nil?
+                            EM::next_tick do
+                                yield
+                            end
+                        end
                     end
                     
                     ##
@@ -98,7 +122,14 @@ module UnifiedQueues
                     #
                     
                     def subscribe(name, &block)
-                        @native.watch(name, &block)        
+                        if not name.in? @subscribed_names
+                            @subscribed_names << name
+                            @native.watch(name, &block)
+                        elsif not block.nil?
+                            EM::next_tick do
+                                yield
+                            end
+                        end        
                     end
                     
                     ##
@@ -107,7 +138,14 @@ module UnifiedQueues
                     #
                     
                     def unsubscribe(name, &block)
-                        @native.ignore(name, &block)
+                        if name.in? @subscribed_names
+                            @subscribed_names.delete name
+                            @native.ignore(name, &block)
+                        elsif not block.nil?
+                            EM::next_tick do
+                                yield
+                            end
+                        end
                     end
                     
                     ##
