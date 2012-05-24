@@ -1,9 +1,9 @@
 Ruby Unified Queues
 ===================
 
-**unified-queues** is a unified queue interface which unifies 8 both 
-normal and priority queue implementations to the single queue API. 
-Usage is simple: 
+**unified-queues** is an unified queue interface which unifies 
+several both normal and priority queue implementations to the single 
+queue API. Usage is simple: 
 
     require "unified-queues"
     
@@ -22,20 +22,19 @@ Usage is simple:
     array_queue.pop!   # will return :foo
 
 Evented queues are also supported by transparent way; simply provide 
-blocks to calls instead of expecting return values.
-
-Currently, the following classes are supported:
+blocks to calls instead of expecting return values. Currently, the 
+following classes are supported:
 
 * `Queue` and `Array` (from Ruby),
 * `Depq` (from `depq` gem),
 * `Containers::Heap` (from `algorithms` gem),
-* `CPriorityQueue`, `PoorPriorityQueue`, `RubyPriorityQueue` (from `priority_queue` gem),
+* `CPriorityQueue`, `PoorPriorityQueue` and `RubyPriorityQueue` (from `priority_queue` gem),
 * `EventedQueue` (from `evented-queue` gem).
     
 And for multiqueues:
   
 * `UnifiedQueues::Single` (from `unified-queues` gem),
-* `EMJack::Connection` (from `em-jack` gem)
+* `EMJack::Connection` (from `em-jack` beanstalk gem)
 
 ### Multiqueue Support
 
@@ -53,7 +52,7 @@ implemented, so it's possible to build a multiqueue interface from
 the common datatypes or Ruby priority queues implementations by 
 an universal and transparent way.
 
-##### Hardcore exmaple
+##### Hardcore example
 
 Hardcore example can by for example following (bonus points for 
 decoding what it does):
