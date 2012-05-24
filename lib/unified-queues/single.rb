@@ -125,6 +125,8 @@ module UnifiedQueues
             @driver.pop(blocking, &block)
         end
         
+        alias :pop! :pop
+        
         ##
         # Indicates queue is empty.
         # @param [Boolean] +true+ if it's, +false+ otherwise
