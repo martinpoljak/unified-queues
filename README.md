@@ -1,37 +1,71 @@
-Callback Locker
-===============
+Ruby Unified Queues
+===================
 
-"Locker" is lockable box for equipment -- at this case box for 
-collecting the callbacks (in ites locked state) and running them 
-after unlocking. So, in fact, it serves as some kind of callback 
-semaphore or mutex. 
+**unified-queues** is a unified queue interface which unifies 8 both 
+normal and priority queue implementations to the single queue API. 
+Usage is simple: 
 
-Some trivial example:
+    require "unified-queues"
+    
+    # Depq
+    require "depq"
+    depq_queue = UnifiedQueues::Single::new(Depq)
 
-    require "callback-locker"
-    locker = CallbackLocker::new
+    # Ruby Array
+    array_queue = UnifiedQueues::Single::new(Array)
+
+    # ...the same API!
+    depq_queue.push(:foo)
+    depq_queue.pop!    # will return :foo
+
+    array_queue.push(:foo)
+    array_queue.pop!   # will return :foo
+
+Evented queues are also supported by transparent way; simply provide 
+blocks to calls instead of expecting return values.
+
+Currently, the following classes are supported:
+
+    * `Queue` and `Array` (from Ruby),
+    * `Depq` (from `depq` gem),
+    * `Containers::Heap` (from `algorithms` gem),
+    * `CPriorityQueue`, `PoorPriorityQueue`, `RubyPriorityQueue` (from `priority_queue` gem),
+    * `EventedQueue` (from `evented-queue` gem).
     
-    foo = nil
-    locker.synchronize do
-        foo = "bar"
-    end
+And for multiqueues:
+  
+    * `UnifiedQueues::Single` (from `unified-queues` gem),
+    * `EMJack::Connection` (from `em-jack` gem)
+
+### Multiqueue Support
+
+*Multiqueue* is a queue which is composed of more queues and single 
+queue can be selected for writing into or reading from. An example 
+of this type of queues are for example some queue servers which 
+typically contain more than one queue. By this way, an unified queue 
+interface can be implemented for more queue servers too.
+
+Reasonable example isn't available, but see the [QRPC][1] project 
+where unified multiqueues are implemented.
+
+Multiqueue driver for single unified queue interface is also 
+implemented, so it's possible to build a multiqueue interface from 
+the common datatypes or Ruby priority queues implementations by 
+an universal and transparent way.
+
+##### Hardcore exmaple
+
+Hardcore example can by for example following (bonus points for 
+decoding what it does):
     
-    # ^^^ locker is unlocked, so #synchronize will execute callback
-    #     immediately 
-    
-    foo = nil
-    locker.lock!
-    locker.synchronize do
-        foo = "1"
-    end
-    locker.synchronize do
-        foo << "2"
-    end
-    locker.unlock!
-    
-    # ^^^ locker is locked, so callbacks are stacked and executed
-    #     immediately after the #unlock! method is call, so foo
-    #     will contain "12"
+    UnifiedQueues::Multi::new UnifiedQueues::Single, ::EM::Wrapper::new(REUQ),  UnifiedQueues::Single, CPriorityQueue
+
+Well, it creates a unified queue interface from the `CPriorityQueue` 
+library, wraps it to evented interface (converts standard interface 
+to evented one), converts it to the evented unified queue interface 
+again and creates a multiqueue interface from it. It may sounds 
+difficulty, but it simply *creates evented unified multiqueue 
+interface from non-evented proprietary library*. Cool.
 
 Contributing
 ------------
@@ -47,9 +81,9 @@ Contributing
 Copyright
 ---------
 
-Copyright &copy; 2011 [Martin Kozák][10]. See `LICENSE.txt` for
+Copyright &copy; 2011 - 2012 [Martin Kozák][10]. See `LICENSE.txt` for
 further details.
 
-[8]: http://rubyeventmachine.com/
-[9]: http://github.com/martinkozak/callback-adapter/issues
+[1]: http://github.com/martinkozak/qrpc
+[9]: http://github.com/martinkozak/unified-queues/issues
 [10]: http://www.martinkozak.net/
