@@ -26,16 +26,16 @@ blocks to calls instead of expecting return values.
 
 Currently, the following classes are supported:
 
-    * `Queue` and `Array` (from Ruby),
-    * `Depq` (from `depq` gem),
-    * `Containers::Heap` (from `algorithms` gem),
-    * `CPriorityQueue`, `PoorPriorityQueue`, `RubyPriorityQueue` (from `priority_queue` gem),
-    * `EventedQueue` (from `evented-queue` gem).
+* `Queue` and `Array` (from Ruby),
+* `Depq` (from `depq` gem),
+* `Containers::Heap` (from `algorithms` gem),
+* `CPriorityQueue`, `PoorPriorityQueue`, `RubyPriorityQueue` (from `priority_queue` gem),
+* `EventedQueue` (from `evented-queue` gem).
     
 And for multiqueues:
   
-    * `UnifiedQueues::Single` (from `unified-queues` gem),
-    * `EMJack::Connection` (from `em-jack` gem)
+* `UnifiedQueues::Single` (from `unified-queues` gem),
+* `EMJack::Connection` (from `em-jack` gem)
 
 ### Multiqueue Support
 
@@ -60,12 +60,12 @@ decoding what it does):
     
     UnifiedQueues::Multi::new UnifiedQueues::Single, ::EM::Wrapper::new(REUQ),  UnifiedQueues::Single, CPriorityQueue
 
-Well, it creates a unified queue interface from the `CPriorityQueue` 
-library, wraps it to evented interface (converts standard interface 
-to evented one), converts it to the evented unified queue interface 
-again and creates a multiqueue interface from it. It may sounds 
-difficulty, but it simply *creates evented unified multiqueue 
-interface from non-evented proprietary library*. Cool.
+Well, it creates an unified queue interface from the `CPriorityQueue`
+library, wraps it to an evented interface (converts standard 
+interface to the evented one), converts it to the evented unified 
+queue interface again and creates a multiqueue interface from it. It 
+may sounds difficulty, but it simply *creates an evented unified 
+multiqueue interface from non-evented proprietary library*. Cool.
 
 Contributing
 ------------
